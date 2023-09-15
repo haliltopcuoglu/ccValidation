@@ -5,8 +5,11 @@ module.exports = (function ccNumValidator(ccNum) {
     let sumOfDigits = 0;
     let doubleUpDigit = false;
 
-    for(let i = 0; i < ccNum.length; i++){
-        let digit = ccNumReversed[i];
+    if (ccNumReversed.length !== 16) {
+        return false;
+    }
+    for(const element of ccNumReversed){
+        let digit = parseInt(element);
 
         // For every second digit from rightmost
         if(doubleUpDigit) {
@@ -16,11 +19,13 @@ module.exports = (function ccNumValidator(ccNum) {
             if(digit > 9)
                 digit -= 9;
         }
- 
+        sumOfDigits += digit;
+        doubleUpDigit = !doubleUpDigit;
     }
-    const isValid = (sumOfDigits % 10 == 0);
-    return isValid;
+    const moduloOfSum = sumOfDigits % 10 === 0;
+    const isValid = moduloOfSum;
     
+    return isValid;
   });
 
   
